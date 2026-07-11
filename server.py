@@ -12,16 +12,20 @@ def emotion_decting():
         The output returnedas scores of the emotions and the dominant emotion.
     '''
     text_to_analyze=request.args.get('textToAnalyze')
-    if len(text_to_analyze)==0:
-        return "The string is empty"
+    # if len(text_to_analyze)==0:
+    #     return "The string is empty"
     response=emotion_detector(text_to_analyze)
-    return f"""For the given statement, the system response is 
-        'anger': {response['anger']}, 
-        'disgust': {response['disgust']}, 
-        'fear': {response['fear']}, 
-        'joy': {response['joy']} and 
-        'sadness': {response['sadness']}. 
-        The dominant emotion is <strong>{response['dominant_emotion']}<strong>."""
+    if response['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
+    else:
+        return f"""For the given statement, the system response is 
+            'anger': {response['anger']}, 
+            'disgust': {response['disgust']}, 
+            'fear': {response['fear']}, 
+            'joy': {response['joy']} and 
+            'sadness': {response['sadness']}. 
+            The dominant emotion is <strong>{response['dominant_emotion']}<strong>."""
+
         
 
 @app.route("/")
